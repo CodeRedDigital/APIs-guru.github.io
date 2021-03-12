@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/css/bootstrap-material-design.min.css">
+    <!-- link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" -->
+    <!-- link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.9/css/bootstrap-material-design.min.css" -->
     <link rel="preconnect" href="https://api.apis.guru">
     <link rel="preconnect" href="https://img.shields.io">
     <meta charset="utf-8">
@@ -125,12 +125,66 @@
     </div>
   </div><!-- end row -->
 
-  <div id="apis-list" class="row"></div>
+  <section id="apis-list" class="cards"></section>
 </div>
 
 <script type="text/dot-template">
+    
+    <div class="card">
+        <header>
+            <h2 title="{{=it.info.title }}">
+              {{? it.externalUrl }}
+                <a href="{{=it.externalUrl }}" target="_blank">{{=it.info.title }}</a>
+              {{??}}
+                {{=it.info.title }}
+              {{?}}
+            </h2>
+        </header>
+        <section class="api-body">
+            <img src="{{=it.logo.url || '/assets/images/no-logo.svg'}}" alt="{{=it.info.title }} API logo" style="background-color: {{=it.logo.backgroundColor || 'transparent'}}" class="api-logo">
+            <p>{{=it.cardDescription}}</p>
+        </section>
+        <footer>
+          <h3> OpenAPI: </h3>
+          <h4>Preferred Version - {{=it.preferred}}</h4>
+          <ul class="preferred-api">
+            <li><a href="{{=it.api.swaggerUrl}}" target="_blank" >json</a></li>
+            <li><a href='{{=it.api.swaggerYamlUrl}}' target="_blank" >yaml</a></li>
+            <li><a href='https://redocly.github.io/redoc/?url={{=it.api.swaggerUrl}}' target="_blank" >Docs</a></li>
+          </ul>
+          {{? it.versions }}
+          <details>
+            <summary><h4>Other Versions</h4></summary>
+            <ul class="other-versions">
+              {{~it.versions :version:index}}
+              <li>
+                <span>{{=version.version}}</span>
+                <ul>
+                  <li><a href="{{=version.swaggerUrl}}" target="_blank" >json</a></li>
+                  <li><a href="{{=version.swaggerYamlUrl}}" target='_blank'>yaml</a></li>
+                  <li><a href='https://redocly.github.io/redoc/?url={{=version.swaggerUrl}}' target="_blank" >Docs</a></li>
+                </ul>
+              </li>
+              {{~}}
+            </ul>
+          </details>
+          {{?}}
+          <details>
+            <summary><h4>Tools</h4></summary>
+            <ul class="tools">
+              {{~it.integrations :integration:index}}
+              <li><a href="{{=integration.template}}" target="_blank" >{{=integration.text}}</a></li>
+              {{~}}
+            </ul>
+          </details>
+        </footer>
+    </div>
+    
+  </script>
+
+<!-- script type="text/dot-template">
   
-  <div class="col-xs-12 col-sm-4 col-md-3">
+  <div class="card">
     <div class="panel panel-default text-center">
       <div class="panel-heading">
         {{? it.externalUrl }}
@@ -190,7 +244,7 @@
     </div>
   </div>
   
-</script>
+</script -->
 
     </div>
 
@@ -216,7 +270,7 @@
   <!-- JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.7.0/marked.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dot/1.0.3/doT.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slideout/0.1.12/slideout.js"></script>
   <!-- inject:js -->
